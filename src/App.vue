@@ -1,47 +1,84 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script>
+export default {
+  data() {
+    return {
+      num1: 0,
+      num2: 0,
+      operation: '+',
+    };
+  },
+  computed: {
+    calculate() {
+      let result;
+      switch (this.operation) {
+        case '+':
+          result = this.num1 + this.num2;
+          break;
+        case '-':
+          result = this.num1 - this.num2;
+          break;
+        case '*':
+          result = this.num1 * this.num2;
+          break;
+        case '/':
+          result = this.num2 !== 0 ? this.num1 / this.num2 : 'Erro: Divisão por zero';
+          break;
+        default:
+          result = 'Operação inválida';
+      }
+      return result;
+    },
+  },
+};
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div id="app">
+    <h1>Calculadora Aritmética</h1>
+    <div>
+      <label for="num1">Número 1:</label>
+      <input type="number" v-model.number="num1" id="num1" />
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <div>
+      <label for="num2">Número 2:</label>
+      <input type="number" v-model.number="num2" id="num2" />
+    </div>
+    <div>
+      <label for="operation">Operação:</label>
+      <select v-model="operation" id="operation">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+      </select>
+    </div>
+    <div>
+      <h2>Resultado: {{ calculate }}</h2>
+    </div>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  text-align: center;
+  color: #0D33B3;
+  margin-top: 60px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+label {
+  display: inline-block;
+  width: 100px;
+  text-align: right;
+  margin-right: 10px;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+input,
+select {
+  margin-bottom: 10px;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+h2 {
+  margin-top: 20px;
 }
 </style>
